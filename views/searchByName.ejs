@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/statics/styles/main.css" />
+    <title>/search/byname</title>
+  </head>
+  <body>
+    <form>
+      <h1>Search for An Animal</h1>
+      <input
+        type="text"
+        style="margin: 20px 0;"
+        placeholder="Search Animal with name"
+        name="name"
+      />
+      <button type="submit">Search</button>
+    </form>
+  </body>
+  <script>
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      await fetch(`/api/animals/byname/${e.target.name.value}`, {
+        method: "GET",
+      })
+        .then((r) => {
+          r.json().then((data) => {
+            alert(data[0].emoji);
+          });
+        })
+        .catch((e) => {
+          alert(e);
+        });
+    });
+  </script>
+</html>
